@@ -252,6 +252,22 @@ function glightbox_admin_form($form, &$form_state) {
     ),
   );
 
+  // Paths
+  $form['paths'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Paths'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['paths']['allowed'] = array(
+    '#type' => 'textarea',
+    '#title' =>  t('All allowed base paths for this site'),
+    '#default_value' => $config->get('paths_allowed'),
+    '#description' => t('The Glightbox libarary is automatically loaded when used as field formatter. If you want to specify additional paths, where it should be loaded, enter them here. Enter one path per line. The "*" character is a wildcard. Example paths are "node/1" for an individual piece of content or "node/*" for every piece of content. "<front>" is the home page.'),
+    '#weight' => 20,
+  );
+
   $form['#validate'][] = 'glightbox_form_validate';
 
   // Submit button.
@@ -269,6 +285,7 @@ function glightbox_admin_form($form, &$form_state) {
  */
 function glightbox_form_validate($form, &$form_state) {
   $form_state['values']['more_text'] = check_plain($form_state['values']['more_text']);
+  $form_state['values']['allowed'] = check_plain($form_state['values']['allowed']);
 }
 
 /**
@@ -298,6 +315,7 @@ function glightbox_admin_form_submit($form, &$form_state) {
   $config->set('navigation_drag_tolerance_x', $form_state['values']['drag_tolerance_x']);
   $config->set('navigation_drag_tolerance_y', $form_state['values']['drag_tolerance_y']);
   $config->set('navigation_drag_auto_snap', $form_state['values']['drag_auto_snap']);
+  $config->set('paths_allowed', $form_state['values']['allowed']);
 
   $config->save();
   backdrop_set_message(t('The configuration options have been saved.'));
