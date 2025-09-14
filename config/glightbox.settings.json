@@ -22,5 +22,6 @@
   "navigation_draggable": true,
   "navigation_drag_tolerance_x": 40,
   "navigation_drag_tolerance_y": 65,
-  "navigation_drag_auto_snap": true
+  "navigation_drag_auto_snap": true,
+  "paths_allowed": "",
 }
